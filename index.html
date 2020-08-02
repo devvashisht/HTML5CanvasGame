@@ -64,7 +64,7 @@ window.onload = function() {
 	canvas = document.getElementById('gameCanvas');
 	canvasContext = canvas.getContext('2d');
 
-	var framesPerSecond = 30;
+	var framesPerSecond = .5;
 	setInterval(updateAll, 1000/framesPerSecond);
 
 	canvas.addEventListener('mousemove', updateMousePos);
@@ -188,16 +188,44 @@ function rowColToArrayIndex(col, row) {
 	return col + BRICK_COLS * row;
 }
 
+const Color = {
+	YELLOW:0 ,
+	RED : 1,
+	BLUE : 2,
+	GREEN: 3
+}
+
 function drawBricks() {
+	var color;
 
 	for(var eachRow=0;eachRow<BRICK_ROWS;eachRow++) {
 		for(var eachCol=0;eachCol<BRICK_COLS;eachCol++) {
 
 			var arrayIndex = rowColToArrayIndex(eachCol, eachRow); 
+			var randomColor = Math.floor(Math.random() * 4);
+			console.log(randomColor)
+			switch(randomColor){
+				case Color.RED :
+				color = "red";
+				break;
+				case Color.BLUE :
+				color = "blue";
+				break;
+				case Color.GREEN :
+				color = "green";
+				break;
+				case Color.YELLOW :
+				color = "yellow";
+				break;
+				default:
+				color ="red"
 
+
+			}
 			if(brickGrid[arrayIndex]) {
 				colorRect(BRICK_W*eachCol,BRICK_H*eachRow,
-					BRICK_W-BRICK_GAP,BRICK_H-BRICK_GAP, 'blue');
+					BRICK_W-BRICK_GAP,BRICK_H-BRICK_GAP, color
+					);
 			} // end of is this brick here
 		} // end of for each brick
 	} // end of for each row
